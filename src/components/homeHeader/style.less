@@ -1,0 +1,45 @@
+@import '../../css/constants.less';
+.homeHeader{
+    width: 100%;
+    display: -webkit-box;   
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    *{
+        text-align: center;
+        height: 2rem;
+        line-height: 2rem;
+    }
+    background-color: white;
+    padding: 0.8rem 0;
+}
+.city{
+    width: 4.5rem;
+    font-size: 1.4rem;
+}
+a{
+    flex: 1;  
+    -webkit-box-flex: 1;
+    .search-box{
+        width: 100%;
+        display: flex;
+        position: relative;
+        div{
+            flex: 1;
+            background-color: @backgroundGray;
+            border-radius: 0.5rem;
+            color: @fontGray;
+        }
+        svg{
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            height: 2rem;
+        }
+    }
+}
+.user{
+    width: 3rem;
+}

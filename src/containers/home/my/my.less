@@ -1,0 +1,63 @@
+@import '../../../css/constants.less';
+.my{
+    width: 100%;
+    color: @fontGray;
+    margin: 3rem 0 4rem;
+    *{
+        background-color: white;
+    }
+}
+.pageTitle{
+    text-align: center;
+    padding: 0.5rem 0;
+    color: @titleBlack;
+    font-size: 1.5rem;
+    font-weight: @pageTitleWeight;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2rem;
+    z-index: 200;
+}
+.myInfo{
+    width: 96%;
+    padding: 1rem 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.1rem solid @borderGray;
+    img{
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        margin: 0 1rem;
+    }
+    .mytext{
+        flex: 1;
+        p{
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+    }
+    .toUser{
+        svg{
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+.my-contant{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    div{
+        width: 33.3%;
+        padding: 0.8rem 0;
+        p{
+            margin-bottom: 0.5rem;
+        }
+    }
+}
