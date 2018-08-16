@@ -9,7 +9,29 @@ import Swipe from 'components/swipe/Swipe'
 import AddHotGroup from './subpage/AddHotGroup'
 import AddHotPeople from './subpage/AddHotPeople'
 import AddHotTopic from './subpage/AddHotTopic'
+// import axios from 'axios'
 class Home extends React.Component {
+  constructor(){
+    super()
+    this.state={}
+    this.getinfo=this.getinfo.bind(this)
+    this.api=this.api.bind(this);
+  }
+  getinfo(){
+    const user='fr';
+    const password= '1997';
+    this.api({user,password},(data)=>{
+      console.log(data);
+    });
+  }
+  api({user,password},cb){
+    // axios.get(`http://localhost:9999/admin?user=${param.user}`).then((res)=>{
+    //   cb(res.data);
+    // }).catch((err)=>{
+    //   console.log(err);
+    //   console.log('登录后台出错');
+    // })
+  }
   render() {
     return (
       <div className="home">
