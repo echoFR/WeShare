@@ -6,7 +6,7 @@ import store from '@/store/store'
 import '@/css/fonts/iconfont'
 import '@/css/reset.less'
 import registerServiceWorker from './registerServiceWorker'
-import '@/axios/config'     //axios拦截器
+import '@/axios/config'
 ReactDOM.render(
     <Provider store={store}>
         <App />

@@ -1,4 +1,6 @@
 import axios from 'axios'
+
+axios.defaults.withCredentials=true;
 // axios拦截器
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {

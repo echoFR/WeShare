@@ -11,6 +11,8 @@ import Moving from 'containers/moving/Moving'
 import SearchDetail from 'containers/searchDetail/SearchDetail'
 import AllGroup from 'containers/allGroup/AllGroup'
 import GroupInfo from 'containers/groupInfo/GroupInfo'
+import Setting from 'containers/setting/Setting'
+
 export default class RouteConfig extends React.Component{
   render(){
     return(
@@ -19,7 +21,7 @@ export default class RouteConfig extends React.Component{
                   <Redirect to="/home" />
           )}/>
           <Route path="/home"  component={Home}/>
-          <Route path="/sign"  component={Sign}/>          
+          <Route path="/sign"  component={Sign}/>    
           <Route path="/message"  component={Message}/>
           <Route path="/user"  component={User}/>
           <Route path="/follow"  component={Follow}/>
@@ -29,6 +31,7 @@ export default class RouteConfig extends React.Component{
           <Route path="/search/:keyword"  component={SearchDetail}/>
           <Route path='/allgroup' component={AllGroup}/>  
           <Route path='/group-info/:id' component={GroupInfo}/>  
+          <Route path='/setting' component={Setting} />
         </Switch>
     )
   }

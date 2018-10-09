@@ -1,0 +1,75 @@
+.login{
+    width: 100%;
+    color: white;
+    font-size: 1.4rem;
+    ::placeholder {
+        color: white;
+        opacity: 1; /* Firefox */
+    }
+    
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+       color: white;
+    }
+    
+    ::-ms-input-placeholder { /* Microsoft Edge */
+       color: white;
+    }
+    .login-form{
+        width: 100%;
+        margin-bottom: 2rem;
+        p{
+            margin-bottom: 0.5rem;
+        }
+        input{
+            width: 100%;
+            color: white;
+            background: none;
+            outline: none;
+            border: none;
+            border-bottom: 0.1rem #EFEFEF solid; 
+            line-height: 2rem;
+            margin-bottom: 2rem;
+        }
+        .pass-box{
+            position: relative;
+        }
+        .password{
+            padding-right: 5rem;
+        }
+        .code-box{
+            width: 70%;
+        }
+        .password{
+            width: 80%;
+            padding-right: 20%;
+        }
+        .get-code{
+            width: 30%;
+            display: inline-block;
+            color: #808080;
+            text-align: center;
+        }
+        .eyes{
+            position: absolute;
+            top: -1rem;
+            right: 2%;
+            svg{
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+    }
+    .login-btn{
+        width: 45%;
+        margin: 0 auto;
+        text-align: center;
+        height: 4rem;
+        line-height: 4rem;
+        background-color: rgba(255,255,255,0.5);
+    }
+    .forget-pass{
+        margin-top: 1.5rem;
+        width: 100%;
+        text-align: center;
+    }
+}

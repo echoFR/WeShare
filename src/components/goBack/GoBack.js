@@ -20,5 +20,7 @@ class GoBack extends React.Component {
         );
     }
 }
-
+GoBack.defaultProps={
+    title: '标题',
+}
 export default GoBack;

@@ -1,0 +1,83 @@
+.sign{
+    width: 100%;  
+    color: white; 
+}
+.sign-bg{
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    background-image: url('../../css/img/bg.jpg');
+    background-size: 100% 100%;
+    -webkit-filter: blur(0.3rem); /* Chrome, Opera */
+    -moz-filter: blur(0.3rem);
+    -ms-filter: blur(0.3rem);    
+    filter: blur(0.3rem);
+    z-index: -1;
+}
+.sign-con{
+    z-index: 200;
+    .sign-goBack{
+        width: 100%;
+        svg{
+            width: 2rem;
+            height: 2rem;
+            margin: 0.5rem 0 0 0.1rem;
+        }
+    }
+    .appName{
+        margin: 12% 0 5%;
+        width: 100%;
+        text-align: center;
+        p{
+            font-weight: bolder;
+            font-size: 2rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    }
+    .select-btn{
+        position: relative;
+        width: 70%;
+        margin: 0 auto;
+        margin-bottom: 5%;
+        border: 0.1rem solid white;
+        border-radius: 5rem;
+        span{
+            display: inline-block;
+            width: 48%;
+            padding: 2% 1%;
+            text-align: center;
+            border-radius: 5rem;
+            height: 1.5rem;
+        }
+        .select-bg{
+            position: absolute;
+            background-color: rgba(255,255,255,0.5);
+            left: 0;
+            top: 0;
+        }
+    }
+    @keyframes loginBtn
+    {
+    from {left:0;}
+    to {left:50%;}
+    }
+    @-webkit-keyframes loginBtn /*Safari and Chrome*/
+    {
+    from {left:0;}
+    to {left:50%;}
+    }
+    @keyframes registeBtn
+    {
+    from {left:50%;}
+    to {left:0;}
+    }
+    @-webkit-keyframes registeBtn /*Safari and Chrome*/
+    {
+    from {left:50%;}
+    to {left:0;}
+    }
+    .select-con{
+        width: 94%;
+        margin: 0 auto;
+    }
+}

@@ -39,7 +39,7 @@ class MyFun extends React.Component {
         </div>
         <div className='my-setting'>
             <div>
-                <Link to='/user'>
+                <Link to='/setting'>
                     <svg className="icon" aria-hidden="true"><use xlinkHref="#icon-zhanghaoshezhi"></use></svg>
                     账号设置
                 </Link>

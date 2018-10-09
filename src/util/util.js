@@ -1,3 +1,15 @@
+// 正则检验
+export function checkPass(reg,str){
+    return reg.test(str)
+}
+
+export function checkEmpty(str){
+    if(str.trim() ===''){
+      return true
+    }
+    return false
+  }
+
 export function CheckEmptyStr(string){
     if (string.replace(/(^\s*)|(\s*$)/g, "").length === 0)
     {
