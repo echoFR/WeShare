@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux'
 
-import cityName from './cityName'
 import email from './email'
 import checkText from './checkText'
+import user_info from './user_info'
 const reducer=combineReducers(
     {
-        cityName: cityName,
         email: email,
-        checkText: checkText
+        checkText: checkText,
+        user_info: user_info,
     }
 )
 export default reducer

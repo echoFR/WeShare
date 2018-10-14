@@ -5,10 +5,7 @@ import MyFun from './subpage/myFun/MyFun'
 import './my.less'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import email from '@/acitons/email'
-
-import getInfo from '@/axios/getInfo'
-
+import user_info from '@/acitons/user_info'
 class My extends React.Component {
     constructor(){
         super()
@@ -40,7 +37,7 @@ class My extends React.Component {
                 </Link>
                 {/* 我的关注 */}
                 <div className='my-contant'>
-                    <div><Link to='/follow'><p>{this.state.info.follow_num}</p><p>关注</p></Link></div>
+                    <div><Link to='/follow'><p>{this.props.user_info.follow_num}</p><p>关注</p></Link></div>
                     <div><Link to='/fans'><p>{this.state.info.fans_num}</p><p>粉丝</p></Link></div>
                     <div><Link to='/moving'><p>{this.state.info.moving_num}</p><p>动态</p></Link></div>            
                 </div>
@@ -61,38 +58,30 @@ class My extends React.Component {
         );
     }
     componentWillMount(){
-        if(localStorage.getItem('email') == null){
-            this.setState({
-                isLogin: false
-            })
-            console.log('还没有登录')
-        }else{
-            const email= localStorage.getItem('email')
-            this.props.emailAction.update(email)
-            getInfo(email,(data)=>{
-                if(!data.error){
-                    this.setState({
-                        info: data.data.info
-                    })
-                }
-            })
-            this.setState({
-                isLogin: true
-            })
+        if(this.props.user_info != null){
+            if(this.props.user_info.user_id!==0){
+                this.setState({
+                    isLogin: true,
+                    info: this.props.user_info
+                })
+            }else{
+                this.setState({
+                    isLogin: false
+                })
+            }
         }
     }
 }
 function mapStateToProps(state){
     return{
-      email: state.email
+      user_info: state.user_info
     }
   }
   function mapDispatchToProps(dispatch){
     return{
-      emailAction: bindActionCreators(email,dispatch)
+      user_infoAction: bindActionCreators(user_info,dispatch)
     }
   }
-  
   export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -10,9 +10,6 @@ class PeopleList extends React.Component {
           list_info: [],
       }
   }
-  changeList(index){
-    //   const b= this.state.list_info.splice(0,1)
-  }
   render() {
     return (
         <div className='people-list'>
@@ -20,7 +17,7 @@ class PeopleList extends React.Component {
             this.state.list_info.length === 0 ? '':
             this.state.list_info.map((item,index)=>{
             return(
-                <Item item={item} history={this.props.history} user_id={this.props.user_id} key={index} index={index} changeList={this.changeList}/>
+                <Item item={item} history={this.props.history}  key={index}/>
             ) 
             })
             }

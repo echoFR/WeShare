@@ -4,47 +4,55 @@ import {checkPass,checkEmpty} from '@/util/util'
 import {userLogin} from '@/axios/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import email from '@/acitons/email'
 import checkText from '@/acitons/checkText'
+import user_info from '@/acitons/user_info'
+
+import showCheck from '@/util/showCheck'
 
 class Login extends React.Component {
   constructor(){
     super()
-    this.toLogin=this.toLogin.bind(this)    
+    this.toLogin=this.toLogin.bind(this)
+    this.upCheckBox=this.upCheckBox.bind(this)    
+  }
+  upCheckBox(text){
+    showCheck()
+    this.props.checkTextAction.update(text)
   }
   toLogin(){
     const email= this.refs.email.value
     const pass= this.refs.pass.value
     const emailReg=/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
     const passReg= /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])|(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,}|(?:(?=.*[A-Z])(?=.*[a-z])|(?=.*[A-Z])(?=.*[0-9])|(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])|(?=.*[a-z])(?=.*[^A-Za-z0-9])|(?=.*[0-9])(?=.*[^A-Za-z0-9])|).{8,16}$/
-    
-    this.props.checkTextAction.update('登录')   
     if(checkEmpty(email)){
-      this.props.checkTextAction.update('邮箱输入为空')
+      this.upCheckBox('邮箱输入为空')
       return
     }
     if(!checkPass(emailReg,email)){
-      this.props.checkTextAction.update('邮箱格式都输错了')      
+      this.upCheckBox('邮箱格式都输错了')
       return
     }
     if(checkEmpty(pass)){
-      this.props.checkTextAction.update('密码输入为空')
+      this.upCheckBox('密码输入为空')
       return
     }
     if(!checkPass(passReg,pass)){
-      this.props.checkTextAction.update('密码格式都输错了')
+      this.upCheckBox('密码格式都输错了')      
       return
     }
     userLogin(email,pass,(data)=>{
       if(data.error){
-        this.props.checkTextAction.update(data.data)
+        this.upCheckBox(data.data)        
         return
+      }else{
+        if(data.error){
+          this.upCheckBox(data.data)  
+          return                
+        }
+        localStorage.setItem('login_time',data.data.user_info.login_time);
+        this.props.user_infoAction.update(data.data.user_info)
+        this.props.history.replace('/home/my')
       }
-      // redux
-      this.props.emailAction.update(email)
-      // localStorage
-      localStorage.setItem('email',email)
-      this.props.history.replace('/home/my')
     })
   }
   render() {
@@ -55,7 +63,7 @@ class Login extends React.Component {
         <input type='text' ref='email'/>
         <p>密码</p>
         <div className='pass-box'>
-            <input type='text' className='password' ref='pass'/>
+            <input type='password' className='password' ref='pass'/>
             <div className='eyes'>
             <svg className="icon" aria-hidden="true">
                 <use xlinkHref="#icon-back"></use>
@@ -72,14 +80,14 @@ class Login extends React.Component {
 
 function mapStateToProps(state){
   return{
-    email: state.email,
     checkText: state.checkText,
+    user_info: state.user_info
   }
 }
 function mapDispatchToProps(dispatch){
   return{
-    emailAction: bindActionCreators(email,dispatch),
-    checkTextAction: bindActionCreators(checkText,dispatch)
+    checkTextAction: bindActionCreators(checkText,dispatch),
+    user_infoAction: bindActionCreators(user_info,dispatch)
   }
 }
 

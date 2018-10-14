@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import email from '@/acitons/email'
 import checkText from '@/acitons/checkText'
+import showCheck from '@/util/showCheck'
 
 import {checkPass,checkEmpty} from '@/util/util'
 class Registe extends React.Component {
@@ -13,55 +14,58 @@ class Registe extends React.Component {
     super()
     this.getCode= this.getCode.bind(this)
     this.registe= this.registe.bind(this)
+    this.upCheckBox=this.upCheckBox.bind(this)    
+  }
+  upCheckBox(text){
+    showCheck()
+    this.props.checkTextAction.update(text)
   }
   // 获取验证码
   getCode(){
-    this.props.checkTextAction.update('获取验证码')                
     const reg= /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
     let email = this.refs.mailbox.value
     if(checkEmpty(email)){
-      this.props.checkTextAction.update('邮箱输入不能为空')            
+      this.upCheckBox('邮箱输入不能为空')      
       return
     }
     if(checkPass(reg,email)){ 
       registeCode(email,(data)=>{ 
-        this.props.checkTextAction.update(data.data)          
+        this.upCheckBox(data.data)
       })
       return
     }
-    this.props.checkTextAction.update('邮箱格式不正确')          
+    this.upCheckBox('邮箱格式不正确')
   }
   // 注册
-  registe(){
-    this.props.checkTextAction.update('注册')                
+  registe(){              
     let email = this.refs.mailbox.value    
     let code= this.refs.code.value
     let pass= this.refs.pass.value
     const reg= /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])|(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,}|(?:(?=.*[A-Z])(?=.*[a-z])|(?=.*[A-Z])(?=.*[0-9])|(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*[0-9])|(?=.*[a-z])(?=.*[^A-Za-z0-9])|(?=.*[0-9])(?=.*[^A-Za-z0-9])|).{8,16}$/
     if(checkEmpty(email)){
-      this.props.checkTextAction.update('邮箱输入不能为空')          
+      this.upCheckBox('邮箱输入不能为空')      
       return
     }
     if(checkEmpty(code)){
-      this.props.checkTextAction.update('激活码输入不能为空')          
+      this.upCheckBox('激活码输入不能为空')      
       return
     }
     if(checkEmpty(pass)){
-      this.props.checkTextAction.update('密码输入不能为空')          
+      this.upCheckBox('密码输入不能为空')      
       return
     }
     if(!checkPass(reg,pass)){
-      this.props.checkTextAction.update('密码必须为8-16位(字母、数字特殊字符的组合)')          
+      this.upCheckBox('密码必须为8-16位(字母、数字特殊字符的组合)')      
       return
     }
     checkCode({code: code, pass: pass},(data)=>{
       if(data.error){
-      this.props.checkTextAction.update(data)          
+      this.upCheckBox(data)        
       }else{
         // 登录
         userLogin(email,pass,(data)=>{
           if(data.error){
-            this.props.checkTextAction.update(data)          
+            this.upCheckBox(data)            
             return
           }
           // redux
@@ -84,7 +88,7 @@ class Registe extends React.Component {
             <span className='get-code' onClick={this.getCode}>| 获取激活码</span>
             <p>密码(6-16位)</p>
             <div className='pass-box'>
-              <input type='type' className='password' ref='pass'/>
+              <input type='password' className='password' ref='pass'/>
               <div className='eyes'>
                 <svg className="icon" aria-hidden="true">
                   <use xlinkHref="#icon-back"></use>

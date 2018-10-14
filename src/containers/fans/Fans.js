@@ -2,9 +2,8 @@ import React from 'react';
 import GoBack from 'components/goBack/GoBack'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import email from '@/acitons/email'
+import user_info from '@/acitons/user_info'
 import './fans.less'
-import getInfo from '@/axios/getInfo'
 import PeopleList from 'components/peopleList/PeopleList'
 import NoList from 'components/noList/NoList'
 import {getFans} from '../../axios/user_Relation'
@@ -12,10 +11,8 @@ class Fans extends React.Component {
   constructor(){
     super()
     this.state={
-      user_id: null,
       follows: [],
     }
-    this.getUserId= this.getUserId.bind(this)
   }
   render() {
     return (
@@ -23,59 +20,38 @@ class Fans extends React.Component {
         <GoBack title='粉丝列表' history={this.props.history}/>
         { 
           this.state.follows.length === 0 ? <NoList text='还没有任何粉丝哦~'/> : 
-          <PeopleList list={this.state.follows} history={this.props.history} user_id={this.state.user_id}></PeopleList>
+          <PeopleList list={this.state.follows} history={this.props.history} user_id={this.props.user_info.user_id}></PeopleList>
         }
         
       </div>
     );
   }
-  getUserId(id){
-    this.setState({
-      user_id: id
-    })
-    // 获取粉丝列表
-    getFans(this.state.user_id,(data)=>{
-      if(!data.error){
-        let follows=data.data.map((item,index)=>{
-          return item.user_id
-        })
-        this.setState({
-          follows: follows
-        })
-      }
-    })
-  }
   componentDidMount(){
-    if(this.props.email == null){
-      if(localStorage.getItem('email') == null){
-          console.log('还没有登录')
-      }else{
-          const email= localStorage.getItem('email')
-          this.props.emailAction.update(email)
-          getInfo(email,(data)=>{
-            if(!data.error){
-              this.getUserId(data.data.info.user_id)
-            }
-          })
+    if(this.props.user_info != null){
+      if(this.props.user_info.user_id!==0){
+        // 获取粉丝列表
+        getFans(this.props.user_info.user_id,(data)=>{
+          if(!data.error){
+            let follows=data.data.map((item,index)=>{
+              return item.user_id
+            })
+            this.setState({
+              follows: follows
+            })
+          }
+        })
       }
-    }else{
-      getInfo(this.props.email,(data)=>{
-        if(!data.error){
-          this.getUserId(data.data.info.user_id)
-        }
-      })
-    } 
-
+    }
   }
 }
 function mapStateToProps(state){
   return{
-    email: state.email
+    user_info: state.user_info
   }
 }
 function mapDispatchToProps(dispatch){
   return{
-    emailAction: bindActionCreators(email,dispatch)
+    user_infoAction: bindActionCreators(user_info,dispatch) 
   }
 }
 

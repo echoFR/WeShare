@@ -2,13 +2,15 @@ import React from 'react';
 import GoBack from 'components/goBack/GoBack'
 import './user.less'
 import {NavLink} from 'react-router-dom'
+import getInfo_id from '../../axios/getInfo_id'
 class User extends React.Component {
   constructor(){
     super()
     this.state={
-      info: {},
+      user_id: null,
       isFollow: true,
-      isUser: false      
+      isUser: false,
+      info:{}      
     }
   }
   changeFollow(e){
@@ -20,6 +22,7 @@ class User extends React.Component {
     return (
       <div className="user-detail">
         <GoBack title={this.state.info.username} history={this.props.history}/>
+        
         <div className='user-baseInfo'>
           {this.state.info.avatar ==null ?'': <img src={require(`@/css/img/${this.state.info.avatar}`)} alt=''/>}
           <div className='baseinfo-con'>
@@ -56,8 +59,17 @@ class User extends React.Component {
   }
   componentDidMount(){
     this.setState({
-      info: this.props.location.state.info,
+      user_id: this.props.location.state.user_id,
       isUser: this.props.location.state.isUser
+    })
+    getInfo_id(this.props.location.state.user_id,(data)=>{
+      if(!data.error){
+        this.setState({
+          info: data.data.info
+        })
+      }else{
+        console.log(data.data);
+      }
     })
   }
 }
