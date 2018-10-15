@@ -4,7 +4,7 @@ import {registeCode,checkCode} from '@/axios/registe'
 import {userLogin} from '@/axios/login'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import email from '@/acitons/email'
+import user_info from '@/acitons/user_info'
 import checkText from '@/acitons/checkText'
 import showCheck from '@/util/showCheck'
 
@@ -12,13 +12,36 @@ import {checkPass,checkEmpty} from '@/util/util'
 class Registe extends React.Component {
   constructor(){
     super()
+    this.state={
+      btnValue: '获取验证码'
+    }
     this.getCode= this.getCode.bind(this)
     this.registe= this.registe.bind(this)
-    this.upCheckBox=this.upCheckBox.bind(this)    
+    this.upCheckBox=this.upCheckBox.bind(this)  
+    this.setTime= this.setTime.bind(this)  
   }
   upCheckBox(text){
     showCheck()
     this.props.checkTextAction.update(text)
+  }
+  // 验证倒计时
+  setTime(countdown,btn){
+    if (countdown === 0) {
+      btn.removeAttribute('disabled');
+      this.setState({
+        btnValue: '获取验证码'
+      })
+      countdown = 60;
+    } else {
+        btn.setAttribute('disabled', true);
+        this.setState({
+          btnValue: `${countdown} 秒后重新获取`
+        })
+        countdown--;
+        setTimeout(()=>{
+          this.setTime(countdown,btn)
+        },1000)
+    }
   }
   // 获取验证码
   getCode(){
@@ -29,12 +52,16 @@ class Registe extends React.Component {
       return
     }
     if(checkPass(reg,email)){ 
-      registeCode(email,(data)=>{ 
+      registeCode(email,(data)=>{
         this.upCheckBox(data.data)
+        return
       })
+      const btn= document.getElementById('getCode')
+      this.setTime(60,btn);
       return
+    }else{
+      this.upCheckBox('邮箱格式不正确')
     }
-    this.upCheckBox('邮箱格式不正确')
   }
   // 注册
   registe(){              
@@ -60,22 +87,34 @@ class Registe extends React.Component {
     }
     checkCode({code: code, pass: pass},(data)=>{
       if(data.error){
-      this.upCheckBox(data)        
+        this.upCheckBox(data.data)        
       }else{
-        // 登录
+        // 注册后直接登录 
         userLogin(email,pass,(data)=>{
           if(data.error){
-            this.upCheckBox(data)            
+            this.upCheckBox(data.data)        
             return
+          }else{
+            if(data.error){
+              this.upCheckBox(data.data)  
+              return                
+            }
+            console.log(data.data);
+            localStorage.setItem('login_time',data.data.user_info.login_time);
+            this.props.user_infoAction.update(data.data.user_info)
+            this.props.history.replace('/home/my')
           }
-          // redux
-          this.props.emailAction.update(email)
-          // localStorage
-          localStorage.setItem('email',email)
-          this.props.history.replace('/home/my')
-        })        
+        })
+        
       }
     })
+  }
+  componentWillUnmount() {
+    // 组件被销毁之前重写setState方法 不对状态做任何改变
+    // 防止 定时器 异步 setState
+    this.setState = (state,callback)=>{
+      return;
+    }
   }
   render() {
     return (
@@ -85,7 +124,7 @@ class Registe extends React.Component {
             <input type='text' ref='mailbox'/>
             <p>激活码</p>        
             <input type='text' className='code-box' ref='code'/>
-            <span className='get-code' onClick={this.getCode}>| 获取激活码</span>
+            <button className='get-code' onClick={this.getCode} id='getCode'>{this.state.btnValue}</button>
             <p>密码(6-16位)</p>
             <div className='pass-box'>
               <input type='password' className='password' ref='pass'/>
@@ -104,17 +143,16 @@ class Registe extends React.Component {
 
 function mapStateToProps(state){
   return{
-    email: state.email,
-    checkText: state.checkText
+    checkText: state.checkText,
+    user_info: state.user_info
   }
 }
 function mapDispatchToProps(dispatch){
   return{
-    emailAction: bindActionCreators(email,dispatch),
-    checkTextAction: bindActionCreators(checkText,dispatch)
+    checkTextAction: bindActionCreators(checkText,dispatch),
+    user_infoAction: bindActionCreators(user_info,dispatch)
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

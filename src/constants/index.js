@@ -19,9 +19,5 @@ export const LOG_OUT='LOG_OUT'
 
 // 修改信息
 export const MODIFY='MODIFY'
-export const MODIFY_SIGN='MODIFY_SIGN'
-export const MODIFY_PASS='MODIFY_PASS'
-export const MODIFY_USERNAME='MODIFY_USERNAME'
-export const MODIFY_AVATAR='MODIFY_AVATAR'
 
 

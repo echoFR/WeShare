@@ -1,4 +1,4 @@
-import {UPDATE_USERINFO,LOG_OUT,ADD_FOLLOW,REDUCE_FOLLOW,MODIFY} from 'constants/index'
+import {UPDATE_USERINFO,LOG_OUT,ADD_FOLLOW,REDUCE_FOLLOW} from 'constants/index'
 
 const initialState = (new Date().getTime()) - localStorage.getItem('login_time')  <= 60000*30 
  ? 
@@ -42,9 +42,6 @@ export default function user_info(state=initialState,action){
             const num = state.follow_num
             localStorage.setItem('user_info',JSON.stringify(Object.assign({}, state, { follow_num: num-1 })))            
             return Object.assign({}, state, { follow_num: num-1 })
-        case  MODIFY:
-            console.log(state);
-            console.log(action);
             
         default: return state
     }

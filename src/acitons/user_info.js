@@ -1,4 +1,4 @@
-import {UPDATE_USERINFO, LOG_OUT,ADD_FOLLOW,REDUCE_FOLLOW,MODIFY} from '../constants/index'
+import {UPDATE_USERINFO, LOG_OUT,ADD_FOLLOW,REDUCE_FOLLOW} from '../constants/index'
 const user_info= {
     update(user_info){
         return{
@@ -21,11 +21,6 @@ const user_info= {
             type: REDUCE_FOLLOW,
         }
     },
-    // modify(style){
-    //     return{
-    //         type: MODIFY
-    //     }
-    // },
 }
 
 export default user_info

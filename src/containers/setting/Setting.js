@@ -8,6 +8,8 @@ import user_info from '@/acitons/user_info'
 import log_out from '@/axios/log_out'
 import checkText from '@/acitons/checkText'
 import showCheck from '@/util/showCheck'
+import {Link} from 'react-router-dom'
+import {modifyInfo} from '@/axios/user_info'
 class Setting extends React.Component {
   constructor(){
     super()
@@ -18,21 +20,27 @@ class Setting extends React.Component {
     this.selectConfirm=this.selectConfirm.bind(this)
     this.noConfirm=this.noConfirm.bind(this)
     this.logOut=this.logOut.bind(this)
+    this.handleChange= this.handleChange.bind(this)
+    this.modify_info= this.modify_info.bind(this)
+    this.upCheckBox= this.upCheckBox.bind(this)
+  }
+  upCheckBox(text){
+    showCheck();
+    this.props.checkTextAction.update(text)
   }
   noConfirm(){
     this.setState({
       showConfirm: false
     })
   }
+  // 退出登录
   logOut(){
     this.setState({
       showConfirm: false
     })
     log_out((data)=>{
       if(data.error){
-        console.log(data.error);
-        showCheck();
-        this.props.checkTextAction.update(data.data)
+        this.upCheckBox('退出登录失败')
       }else{
         this.props.user_infoAciton.log_out();
         this.props.history.replace('/home/my');
@@ -44,6 +52,42 @@ class Setting extends React.Component {
       showConfirm: true
     })
   }
+  handleChange(e,type){
+    if(type === 'username'){
+      const new_info= Object.assign({},this.state.info,{username: e.target.value})
+      this.setState({
+        info: new_info
+      })
+    }else if(type === 'signature'){
+      const new_info= Object.assign({},this.state.info,{signature: e.target.value})
+      this.setState({
+        info: new_info
+      })
+    }
+  }
+  // 修改用户信息
+  modify_info(type){
+    // 正则验证
+    var newValue=''
+    if(type === 'username'){
+      newValue= this.state.info.username
+      if(newValue.length > 20){
+        this.upCheckBox('昵称长度不能超过20')
+        return
+      }
+    }
+    else if(type === 'signature'){
+      newValue= this.state.info.signature
+      if(newValue.length > 30){
+        this.upCheckBox('签名长度不能超过20')
+        return
+      }
+    }
+    modifyInfo(this.props.user_info.user_id,type,newValue,(data)=>{
+      this.upCheckBox(data.data)
+      this.props.user_infoAciton.update(this.state.info)
+    })
+  }
   render() {
     return (
       <div className="setting">
@@ -51,20 +95,34 @@ class Setting extends React.Component {
         <GoBack title='账号设置' history={this.props.history}/>
         <div className='setFun'>
           <div className='info'>
-            <span>
             {this.state.info.avatar ==null ?'': <span> 头像： <img src={require(`@/css/img/${this.state.info.avatar}`)}  alt=''/> </span>}              
+          </div>
+          <div>
+            <span className='base-info'>
+            <span className='input-title'>昵称：</span><input type='text' defaultValue={this.state.info.username} onChange={(e)=>{this.handleChange(e,'username')}}/>
+            </span>
+            <span onClick={()=>{this.modify_info('username')}}>
+              <svg className="icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mjiantou"></use>
+              </svg>
             </span>
           </div>
           <div>
-            <span>昵称：{this.state.info.username}</span>
+            <span className='base-info'>
+            <span className='input-title'>签名：</span><input type='text' defaultValue={this.state.info.signature} onChange={(e)=>{this.handleChange(e,'signature')}}/>
+            </span>
+            <span onClick={()=>{this.modify_info('signature')}}>
+              <svg className="icon" aria-hidden="true">
+                  <use xlinkHref="#icon-mjiantou"></use>
+              </svg>
+            </span>
           </div>
-          <div>
-            <span>签名：{this.state.info.signature}</span>
-          </div>
-          <div>
-            <span>邮箱绑定：{this.state.info.email}</span>
-          </div>
-
+          <Link className='out' to='/modify_email'>
+            邮箱绑定
+          </Link>
+          <Link className='out' to='/modify_pass'>
+            修改密码
+          </Link>
           <div className='out' onClick={this.selectConfirm}>
             退出登录
           </div>

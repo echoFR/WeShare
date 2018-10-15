@@ -12,6 +12,19 @@
         margin-bottom: 0.2rem;
         display: flex;
         justify-content: space-between;
+        .base-info{
+            display: flex;
+            flex: 1;
+        }
+        .input-title{
+            display: block;
+            width: 4.5rem;
+        }
+        input{
+            outline: none;
+            border: none;
+            flex: 1;
+        }
         svg{
             width: 1.5rem;
             height: 1.5rem;
@@ -27,7 +40,15 @@
         }
     }
     .out{
+        display: flex;
+        justify-content: space-between;
         margin: 1rem 0;
         color: red;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background-color: white;
+        width: 94%;
+        padding: 0.5rem 3%;
+        line-height: 4rem;
     }
 }
