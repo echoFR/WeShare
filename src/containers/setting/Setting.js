@@ -40,7 +40,7 @@ class Setting extends React.Component {
     })
     log_out((data)=>{
       if(data.error){
-        this.upCheckBox('退出登录失败')
+        this.upCheckBox(data.data)
       }else{
         this.props.user_infoAciton.log_out();
         this.props.history.replace('/home/my');
