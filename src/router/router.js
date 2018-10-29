@@ -12,7 +12,9 @@ import SearchDetail from 'containers/searchDetail/SearchDetail'
 import AllGroup from 'containers/allGroup/AllGroup'
 import GroupInfo from 'containers/groupInfo/GroupInfo'
 import Setting from 'containers/setting/Setting'
-import ModifyPass from '../containers/modify_pass/ModifyPass'
+import ModifyPass from 'containers/modify_pass/ModifyPass'
+import Publish from 'containers/publish/Publish'
+
 export default class RouteConfig extends React.Component{
   render(){
     return(
@@ -32,8 +34,8 @@ export default class RouteConfig extends React.Component{
           <Route path='/allgroup' component={AllGroup}/>  
           <Route path='/group-info/:id' component={GroupInfo}/>  
           <Route path='/setting' component={Setting} />
-          <Route path='/modify_pass' component={ModifyPass} />          
-          {/* modify_email */}
+          <Route path='/modify_pass' component={ModifyPass} /> 
+          <Route path='/publish' component={Publish} />   
         </Switch>
     )
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import GoBack from 'components/goBack/GoBack'
 import './user.less'
 import {NavLink} from 'react-router-dom'
-import getInfo_id from '../../axios/getInfo_id'
 class User extends React.Component {
   constructor(){
     super()
@@ -59,17 +58,8 @@ class User extends React.Component {
   }
   componentDidMount(){
     this.setState({
-      user_id: this.props.location.state.user_id,
+      info: this.props.location.state.info,
       isUser: this.props.location.state.isUser
-    })
-    getInfo_id(this.props.location.state.user_id,(data)=>{
-      if(!data.error){
-        this.setState({
-          info: data.data.info
-        })
-      }else{
-        console.log(data.data);
-      }
     })
   }
 }

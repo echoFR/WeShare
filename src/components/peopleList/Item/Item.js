@@ -63,7 +63,7 @@ class Item extends React.Component {
 goDetail(item){
     this.props.history.push({
         pathname: `/user`,
-        state: {user_id: item.user_id, isUser: false}
+        state: {isUser: false,info: item}
     })
 }
 componentDidMount(){

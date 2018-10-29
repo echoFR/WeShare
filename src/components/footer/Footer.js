@@ -22,7 +22,7 @@ class Footer extends React.Component {
             </NavLink>
         </div>
         <div className='public'>
-            <NavLink to='/home/public'>
+            <NavLink to='/publish'>
             <span className='public-box'>
             <svg className="icon" aria-hidden="true">
                 <use xlinkHref="#icon-fabu-copy"></use>

@@ -1,0 +1,110 @@
+.publish{
+    width: 100%;
+    margin-top: 3rem;
+    .publish-btn{
+        z-index: 400;
+        position: fixed;
+        top: 0;
+        right: 1%;
+        color: #F0503A;
+        font-size: 1.3rem;
+        height: 3rem;
+        line-height: 3rem;
+    }
+    .contener{
+        font-size: 1.4rem;
+        position: fixed;
+        width: 100%;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        height: ~"calc(100% - 3rem)";
+        justify-content: flex-start;
+        align-items: center;
+        .title{
+            width: 94%;
+            padding: 0.5rem 3%;
+            border: none;
+            border-bottom: 0.1rem solid #eee;
+            outline: none;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .auto-div{
+            flex: 1;
+            width: 100%;
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+            .editbox{
+                flex: 1;
+                width:94%;
+                padding: 0.5rem 3%;
+                overflow-x:hidden;
+                overflow-y:auto; 
+                outline:none;
+                caret-color: red;   //光标颜色
+                word-wrap:break-word;  /*遇到空格整个单词显示不完就自动换行到下一行*/
+                word-break:break-all;  /*如果一行没有空格就到头截断单词换行*/
+            }
+            .editbox img{ 
+                margin:0 0.3rem;
+                display:block;
+                width: 100%;
+                height: 20rem;
+                margin-bottom: 0.5rem;
+            }
+            .my-canvas{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                border-bottom: 1px solid #eee;
+                border-top: 1px solid #eee;                
+                div{
+                    position: relative;
+                    margin-bottom: 10px;
+                    display:flex;
+                    align-items:center; 
+                    justify-content:center;
+                    width: 30%;
+                    padding: 1%;
+                    border: 1px solid #eee;
+                    span{
+                        padding: 1px 3px;
+                        color: #eee;
+                        background-color: rgba(0, 0, 0, 0.4);
+                        display: block;
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                    }
+                    img{
+                        max-width: 100%;
+                        height: 100px;
+                    }
+                }
+            }
+        }
+        .more{
+            background-color: #eee;
+            width: 98%;
+            padding: 0.5rem 1%;
+            display: flex;
+            div{
+                margin-left: 3.5%;
+                svg{
+                    width: 2.5rem;
+                    height: 2.5rem;
+                }
+                .input-file{
+                    opacity: 0;
+                    outline: none;
+                    position: relative;
+                    left: -1.8rem;
+                    top: 0;
+                }
+            }
+        }
+    }
+}
+
